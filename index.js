@@ -1,3 +1,4 @@
+const routes = require("./Source/Router/route.js");
 var express = require("express");
 var app = express();
 var compression = require("compression");
@@ -5,7 +6,7 @@ var bodyParser = require("body-parser");
 var morgaon = require("morgan");
 var http = require("http");
 var helmet = require("helmet");
-const routes = require("./Source/Router/route.js");
+var tokenVerify = require("./Source/Middleware/tokenVerify").verifyToken;
 
 require("./Source/Config/dbConfig");
 
@@ -33,14 +34,15 @@ app.use(
   })
 );
 
-app.use(helmet());
 app.use(morgaon("combined"));
+app.use(tokenVerify);
+app.use(helmet());
 app.use(compression());
 app.use("/api", routes);
+
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);

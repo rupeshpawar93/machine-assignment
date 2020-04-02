@@ -1,5 +1,22 @@
 const mongoose = require("mongoose");
-let Schema = mongoose.Schema;
+const SALT_WORK_FACTOR = 10;
+var Schema = mongoose.Schema;
+var bcrypt = require("bcrypt");
+
+/**
+ * @param string
+ * @returns boolean value
+ * */
+var validateString = string => {
+  let re = /^[A-Za-z0-9 ]+$/;
+  return re.test(string);
+};
+
+var validateEmail = email => {
+  let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email);
+};
+
 let userSchema = new Schema(
   {
     name: {
@@ -13,7 +30,7 @@ let userSchema = new Schema(
       required: true,
       index: true,
       unique: true,
-      validate: [validateString, "Please fill a valid username"]
+      validate: [validateEmail, "Please fill a valid username"]
     },
     password: {
       type: String,
@@ -32,14 +49,6 @@ let userSchema = new Schema(
     timestamps: true
   }
 );
-/**
- * @param email
- * @returns boolean value
- * */
-let validateString = string => {
-  var re = /^[A-Za-z0-9 ]+$/;
-  return re.test(string);
-};
 
 userSchema.pre("save", function(next) {
   var user = this;
@@ -48,8 +57,10 @@ userSchema.pre("save", function(next) {
   if (!user.isModified("password")) return next();
 
   // generate a salt
-  bcrypt.genSalt(config.SALT_WORK_FACTOR, function(err, salt) {
-    if (err) return next(err);
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if (err) {
+      return next(err);
+    }
 
     // hash the password using our new salt
     bcrypt.hash(user.password, salt, function(err, hash) {
@@ -69,3 +80,5 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
     cb(null, isMatch);
   });
 };
+
+exports.default = mongoose.model("users", userSchema);

@@ -4,7 +4,7 @@
   "description": "Machine Round Coding test",
   "main": "index.js",
   "scripts": {
-    "test": "PORT=4000 nodemon index"
+    "test": "PORT=4000 SECRET_KEY=freeRecharge  SALT_WORK_FACTOR=10 nodemon index"
   },
   "keywords": [
     "Freecharge",
@@ -14,11 +14,14 @@
   "author": "rupesh pawar",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "express": "^4.17.1",
+    "express-validator": "^6.4.0",
     "helmet": "^3.22.0",
     "http": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.7",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.2"
