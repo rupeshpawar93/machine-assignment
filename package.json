@@ -1,0 +1,23 @@
+{
+  "name": "freecharge",
+  "version": "1.0.0",
+  "description": "Machine Round Coding test",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "keywords": [
+    "Freecharge",
+    "Machine",
+    "Round"
+  ],
+  "author": "rupesh pawar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.7",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.2"
+  }
+}
