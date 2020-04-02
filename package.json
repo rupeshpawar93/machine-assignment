@@ -4,7 +4,8 @@
   "description": "Machine Round Coding test",
   "main": "index.js",
   "scripts": {
-    "test": "PORT=4000 SECRET_KEY=freeRecharge  SALT_WORK_FACTOR=10 nodemon index"
+    "test": "PORT=3000 SECRET_KEY=freecharge  SALT_WORK_FACTOR=10 nodemon index",
+    "start": "PORT=3000 SECRET_KEY=freecharge  SALT_WORK_FACTOR=10 pm2 start index.js"
   },
   "keywords": [
     "Freecharge",
@@ -26,6 +27,7 @@
     "mongoose": "^5.9.7",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "pm2": "^4.2.3"
   }
 }
