@@ -18,21 +18,9 @@ app.set("port", port);
  */
 var server = http.createServer(app);
 
-app.use(
-  bodyParser.json({
-    extended: false,
-    parameterLimit: 10000,
-    limit: 1024 * 1024 * 10
-  })
-);
+app.use(bodyParser.json());
 
-app.use(
-  bodyParser.urlencoded({
-    extended: false,
-    parameterLimit: 10000,
-    limit: 1024 * 1024 * 10
-  })
-);
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgaon("combined"));
 app.use(tokenVerify);

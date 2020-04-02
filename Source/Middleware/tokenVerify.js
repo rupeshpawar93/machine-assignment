@@ -29,7 +29,7 @@ exports.signToken = user => {
 // Verifying token from the user
 exports.verifyToken = (req, res, next) => {
   let currUrl = req.originalUrl;
-  console.log(excludedUrls.includes(currUrl) + "9999");
+
   if (!excludedUrls.includes(currUrl)) {
     // check header or url parameters or post parameters for token
     let token = getTokenFromHeader(req.headers);
@@ -44,11 +44,11 @@ exports.verifyToken = (req, res, next) => {
           let User = mongoose.model("users");
           let flag = await User.findOne({ _id: decoded.id });
           if (flag) {
-            req.id = decoded.id;
+            req.user_id = decoded.id;
             req.newToken = this.signToken(userDetail);
             next();
           } else {
-            return res.status(401).send("Failed to authenticate");
+            return res.status(401).json({ error: "Failed to authenticate" });
           }
         }
       });
