@@ -19,6 +19,7 @@
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
+    "fs": "0.0.1-security",
     "helmet": "^3.22.0",
     "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",

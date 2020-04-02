@@ -44,7 +44,9 @@ exports.register = [
           res.status(500).json({ error: err.message });
         } else {
           result = result.toObject();
-          res.status(200).json({ data: result });
+          res
+            .status(200)
+            .json({ data: result, message: "Successfully created" });
         }
       });
     } catch (err) {
@@ -89,7 +91,9 @@ exports.signin = [
               data.token = data.isMatch ? signToken({ id: result._id }) : "";
               data._id = result._id;
               data.isMatch
-                ? res.status(200).json({ data: data })
+                ? res
+                    .status(200)
+                    .json({ data: data, message: "Sucessfully signed in" })
                 : res.status(401).json({ errror: "Wrong password" });
             }
           });

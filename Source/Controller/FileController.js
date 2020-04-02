@@ -1,5 +1,6 @@
 const { check, validationResult } = require("express-validator");
 const { User, File } = require("./../Models/Module");
+const fs = require("fs");
 
 /**
  * @api {post} /api/app/upload-file upload file
@@ -25,7 +26,7 @@ exports.store = async (req, res) => {
       { _id: req.user_id },
       { $push: { file_id: fileData._id } },
       {
-        upsert: true
+        new: true
       }
     );
     res.status(200).json({ data: fileData, message: "Success" });
@@ -34,4 +35,27 @@ exports.store = async (req, res) => {
   }
 };
 
-exports.remove = async (req, res) => {};
+exports.remove = [
+  check("file_id"),
+  async (req, res) => {
+    try {
+      let fileData = await File.findOne({ _id: req.body.file_id });
+      if (!fileData) {
+        return res.status(404).json({ error: "File not found" });
+      }
+      //remove file from path sync way
+      fs.unlinkSync(fileData.file_path);
+
+      await File.deleteOne({ _id: req.body.file_id });
+
+      let userData = await User.findOneAndUpdate(
+        { _id: req.user_id },
+        { $pull: { file_id: req.body.file_id } },
+        { new: true }
+      );
+      res.status(200).json({ data: userData, message: "Deleted file" });
+    } catch (err) {
+      res.status(500).json({ err: err.message, message: "failed" });
+    }
+  }
+];

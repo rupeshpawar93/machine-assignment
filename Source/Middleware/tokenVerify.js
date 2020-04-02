@@ -2,6 +2,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 var jwt = require("jsonwebtoken");
 var mongoose = require("mongoose");
 var excludedUrls = ["/api/register", "/api/signin"];
+const { User } = require("./../Models/Module");
 
 // GetTokenFromHeader
 let getTokenFromHeader = headers => {
@@ -41,7 +42,6 @@ exports.verifyToken = (req, res, next) => {
           let userDetail = {
             id: decoded.id
           };
-          let User = mongoose.model("users");
           let flag = await User.findOne({ _id: decoded.id });
           if (flag) {
             req.user_id = decoded.id;
