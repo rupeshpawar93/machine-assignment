@@ -1,13 +1,14 @@
 const routes = require("./Source/Router/route.js");
-var express = require("express");
-var app = express();
+const helmet = require("helmet");
+const express = require("express");
+const app = express();
 var compression = require("compression");
 var bodyParser = require("body-parser");
 var morgaon = require("morgan");
 var http = require("http");
-var helmet = require("helmet");
 var tokenVerify = require("./Source/Middleware/tokenVerify").verifyToken;
 
+//db connection
 require("./Source/Config/dbConfig");
 
 var port = process.env.PORT ? process.env.PORT : "3000";
