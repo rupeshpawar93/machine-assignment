@@ -9,7 +9,6 @@ const fs = require("fs");
  * @returns File
  * */
 exports.store = async (req, res) => {
-  console.log(req.file);
   if (!req.file) {
     res.status(404).json({ error: "No file Found" });
   }
@@ -23,7 +22,6 @@ exports.store = async (req, res) => {
     let newFile = new File(file);
     //   save file
     let fileData = await newFile.save();
-
     //   add reference of file in user
     await User.findOneAndUpdate(
       { _id: req.user_id },
@@ -69,6 +67,11 @@ exports.remove = [
   }
 ];
 
+/**
+ * @api {get} /api/app/show-file show file list
+ * @apiName show
+ * @returns file data with user name
+ * */
 exports.show = async (req, res) => {
   try {
     let fileData = await File.find({}).populate("user_id", "name");

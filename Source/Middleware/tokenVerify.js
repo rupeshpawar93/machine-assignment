@@ -1,8 +1,8 @@
 const SECRET_KEY = process.env.SECRET_KEY;
-var jwt = require("jsonwebtoken");
-var mongoose = require("mongoose");
-var excludedUrls = ["/api/register", "/api/signin"];
 const { User } = require("./../Models/Module");
+const mongoose = require("mongoose");
+var jwt = require("jsonwebtoken");
+var excludedUrls = ["/api/register", "/api/signin"];
 
 // GetTokenFromHeader
 let getTokenFromHeader = headers => {

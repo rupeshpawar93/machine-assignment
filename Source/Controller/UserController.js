@@ -44,6 +44,7 @@ exports.register = [
           res.status(500).json({ error: err.message });
         } else {
           result = result.toObject();
+          delete result.password;
           res
             .status(200)
             .json({ data: result, message: "Successfully created" });

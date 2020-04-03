@@ -10,3 +10,6 @@ To see upload file in browser URL: http://site_url/file/file_name for eg http://
 Here mongodb is used as database and hosted at https://mlab.com/.
 jsonwebtoken is used to create token for user authentication.
 mutler and fs package used for uploading and removing file.
+
+Use token for other api (upload,remove and listing) received from signin api in header:
+Authorization: Bearer token
