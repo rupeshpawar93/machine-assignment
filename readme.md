@@ -14,3 +14,10 @@ Field name: uploader ( for uploading files)
 
 Use token for other api (upload,remove and listing) received from signin api in header:
 Authorization: Bearer token
+
+api list:
+1. post : api/register  - register api
+2. post: api/signin - login api
+3. post: api/upload-file - upload file api
+4. post: api/remove-file - remove file api
+5. get: api/show-list - show files list api
