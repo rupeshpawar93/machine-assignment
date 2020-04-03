@@ -5,7 +5,7 @@ Installation Steps:
 3. run command: npm install ---- to install all the dependencies
 4. run command: npm test (nodemon) or npm start (pm2) start the server
 
-To see upload file in browser URL: http://site_url/file/file_name for eg http://localhost:3000/file/uploader-1585844225890C006-SP-2453%5E201911.pdf
+To see upload file in browser URL: http://site_url/file_path for eg http://localhost:3000/uploader-15858951273822075944_20200318.pdf
 
 Here mongodb is used as database and hosted at https://mlab.com/.
 jsonwebtoken is used to create token for user authentication.

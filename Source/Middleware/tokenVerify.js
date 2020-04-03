@@ -47,7 +47,7 @@ exports.signToken = user => {
 // Verifying token from the user
 exports.verifyToken = (req, res, next) => {
   let currUrl = req.originalUrl;
-  let regex = /file\/.*/g;
+  let regex = /uploads\/.*/g;
 
   if (filterUrl(currUrl, regex)) {
     // check header or url parameters or post parameters for token
