@@ -1,6 +1,6 @@
 Installation Steps:
 
-1. git clone https://github.com/rupeshpawar93/machone-assignment.git.
+1. git clone https://github.com/rupeshpawar93/machine-assignment.git.
 2. run command: cd folder
 3. run command: npm install ---- to install all the dependencies
 4. run command: npm test (nodemon) or npm start (pm2) start the server
