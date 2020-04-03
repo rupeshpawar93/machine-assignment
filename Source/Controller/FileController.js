@@ -10,7 +10,7 @@ const fs = require("fs");
  * */
 exports.store = async (req, res) => {
   if (!req.file) {
-    res.status(404).json({ error: "No file Found" });
+    return res.status(404).json({ error: "No file Found" });
   }
   try {
     let file = {
@@ -32,7 +32,7 @@ exports.store = async (req, res) => {
     );
     res.status(200).json({ data: fileData, message: "Success" });
   } catch (err) {
-    res.status(500).json({ error: err.message, message: "Failed" });
+    return res.status(500).json({ error: err.message, message: "Failed" });
   }
 };
 

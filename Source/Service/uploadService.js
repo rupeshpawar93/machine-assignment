@@ -5,6 +5,15 @@ var MIME_TYPE_MAP = [];
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
+    if (
+      !file.mimetype.includes("jpeg") &&
+      !file.mimetype.includes("jpg") &&
+      !file.mimetype.includes("png") &&
+      !file.mimetype.includes("gif") &&
+      !file.mimetype.includes("pdf")
+    ) {
+      return cb(new Error("Only images and pdf are allowed"));
+    }
     cb(null, "uploads/");
   },
   filename: function(req, file, cb) {
@@ -17,9 +26,10 @@ const storage = multer.diskStorage({
  *
  * */
 exports.sinlgeFile = (req, res, next) => {
-  multer({ storage: storage, limits: { fileSize: POST_MAX_SIZE } }).single(
-    "uploader"
-  )(req, res, function(err) {
+  multer({
+    storage,
+    limits: { fileSize: POST_MAX_SIZE }
+  }).single("uploader")(req, res, function(err) {
     //Catching and handling errors of multer
     if (err instanceof multer.MulterError) {
       return res.status(500).json({ error: err.message });
