@@ -5,9 +5,11 @@ const fs = require("fs");
 /**
  * @api {post} /api/app/upload-file upload file
  * @apiName store
+ * @apiParam uploader
  * @returns File
  * */
 exports.store = async (req, res) => {
+  console.log(req.file);
   if (!req.file) {
     res.status(404).json({ error: "No file Found" });
   }
@@ -15,7 +17,8 @@ exports.store = async (req, res) => {
     let file = {
       file_name: req.file.filename,
       file_path: req.file.path,
-      user_id: req.user_id
+      user_id: req.user_id,
+      mime_type: req.file.mimetype
     };
     let newFile = new File(file);
     //   save file
@@ -35,6 +38,12 @@ exports.store = async (req, res) => {
   }
 };
 
+/**
+ * @api {post} /api/app/remove-file remove file
+ * @apiName remove
+ * @apiParam file_id
+ * @returns user data with file
+ * */
 exports.remove = [
   check("file_id"),
   async (req, res) => {
@@ -59,3 +68,19 @@ exports.remove = [
     }
   }
 ];
+
+exports.show = async (req, res) => {
+  try {
+    let fileData = await File.find({}).populate("user_id", "name");
+    if (!fileData) {
+      return res
+        .status(200)
+        .json({ data: fileData, message: "No Files Foubd" });
+    }
+    res.status(200).json({ data: fileData, message: "file list" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: err.message, message: "Something went wrong" });
+  }
+};

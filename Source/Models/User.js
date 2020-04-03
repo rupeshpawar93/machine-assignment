@@ -41,7 +41,7 @@ let userSchema = new Schema(
     file_id: [
       {
         type: Schema.Types.ObjectId,
-        ref: "file"
+        ref: "files"
       }
     ]
   },

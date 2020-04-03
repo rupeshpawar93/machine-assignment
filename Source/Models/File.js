@@ -11,9 +11,13 @@ let fileSchema = new Schema(
       type: String,
       required: true
     },
+    mime_type: {
+      type: String,
+      required: true
+    },
     user_id: {
       type: Schema.Types.ObjectId,
-      ref: "file"
+      ref: "users"
     }
   },
   {

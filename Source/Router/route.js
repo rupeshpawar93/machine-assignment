@@ -13,4 +13,6 @@ router.post("/upload-file", fileUpload, FileController.store);
 
 router.post("/remove-file", FileController.remove);
 
+router.get("/show-file", FileController.show);
+
 module.exports = router;
