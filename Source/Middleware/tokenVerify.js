@@ -5,7 +5,7 @@ var jwt = require("jsonwebtoken");
 var excludedUrls = ["/api/register", "/api/signin"];
 
 // GetTokenFromHeader
-let getTokenFromHeader = headers => {
+var getTokenFromHeader = headers => {
   if (headers && headers.authorization) {
     let authorization = headers.authorization;
     let part = authorization.split(" ");
@@ -20,6 +20,23 @@ let getTokenFromHeader = headers => {
   }
 };
 
+/**
+ *  filterUrl based on regex and exclude url
+ * @param currUrl
+ * @param regex
+ * @returns boolean
+ * */
+var filterUrl = (currUrl, regex = null) => {
+  let matches = currUrl.match(regex);
+  if (excludedUrls.includes(currUrl)) {
+    return false;
+  }
+  if (matches) {
+    return false;
+  }
+  return true;
+};
+
 // Signing the token
 exports.signToken = user => {
   return jwt.sign(user, SECRET_KEY, {
@@ -30,14 +47,15 @@ exports.signToken = user => {
 // Verifying token from the user
 exports.verifyToken = (req, res, next) => {
   let currUrl = req.originalUrl;
+  let regex = /file\/.*/g;
 
-  if (!excludedUrls.includes(currUrl)) {
+  if (filterUrl(currUrl, regex)) {
     // check header or url parameters or post parameters for token
     let token = getTokenFromHeader(req.headers);
     if (token) {
       jwt.verify(token, SECRET_KEY, async (err, decoded) => {
         if (err) {
-          return res.status(401).send("Failed to authenticate");
+          return res.status(401).json({ error: "Failed to authenticate" });
         } else {
           let userDetail = {
             id: decoded.id
@@ -55,7 +73,7 @@ exports.verifyToken = (req, res, next) => {
     } else {
       // if there is no token
       // return an error
-      return res.status(403).send("No token was provided.");
+      return res.status(403).json({ error: "No token was provided." });
     }
   } else {
     next();

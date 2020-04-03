@@ -74,11 +74,14 @@ exports.remove = [
  * */
 exports.show = async (req, res) => {
   try {
-    let fileData = await File.find({}).populate("user_id", "name");
+    let fileData = await File.find({ user_id: req.user_id }).populate(
+      "user_id",
+      "name"
+    );
     if (!fileData) {
       return res
         .status(200)
-        .json({ data: fileData, message: "No Files Foubd" });
+        .json({ data: fileData, message: "No Files Found" });
     }
     res.status(200).json({ data: fileData, message: "file list" });
   } catch (err) {

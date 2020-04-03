@@ -41,7 +41,7 @@ exports.register = [
       let newUser = new User(userDetail);
       newUser.save((err, result) => {
         if (err) {
-          res.status(500).json({ error: err.message });
+          res.status(500).json({ error: err.message, message: "failed" });
         } else {
           result = result.toObject();
           delete result.password;

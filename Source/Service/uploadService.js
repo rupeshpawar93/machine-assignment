@@ -1,11 +1,10 @@
-const POST_MAX_SIZE = 3 * 1024 * 1024; //MB
+const POST_MAX_SIZE = 30 * 1024 * 1024; //MB
 const UPLOAD_MAX_FILE_SIZE = 2;
 var multer = require("multer");
 var MIME_TYPE_MAP = [];
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    console.log(file + "-----");
     cb(null, "uploads/");
   },
   filename: function(req, file, cb) {
