@@ -28,7 +28,7 @@ app.use(tokenVerify);
 app.use(helmet());
 app.use(compression());
 // static path
-app.use("/file", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api", routes);
 
